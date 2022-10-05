@@ -3,15 +3,19 @@ form {
     justify-content: center;
 }
 
-#input, #k, #inputDec, .parDecrypt {
+#input, #k, #inputDec, .parDecrypt, #keyP, #keyQ, #keyD {
     width: 40%;
     margin: 10px;
     padding: 5px;
-    font-size: 25px;
+    font-size: 20px;
 }
 
 #k {
     width: 10%;
+}
+
+#keyD, #keyP, #keyQ {
+    width: 8%;
 }
 
 button, p {

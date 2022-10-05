@@ -3,6 +3,7 @@ const inputDec = document.querySelector('#inputDec')
 const btnEnc = document.querySelector('#btnEnc')
 const btnDec = document.querySelector('#btnDec')
 
+
 const PQKeys = () => {
     let = simpleNumbers = []
     for (let i = 0; i < 20; i++) {
@@ -47,7 +48,11 @@ const getNod = (num1, num2) => {
 
 const EDKeys = () => {
     let mas = PQKeys()
-    const p = mas[0], q = mas[1]
+    let p = mas[0], q = mas[1]
+    while (p * q < 130) {
+        mas = PQKeys()
+        p = mas[0], q = mas[1]
+    }
     const n = p * q
     let d = 0
     let i = 0
@@ -72,29 +77,28 @@ function encrypt(text) {
     let masText = text.split(''), textOutput = ''  
     let mas = EDKeys()
     let p = mas[0], q = mas[1], d = mas[2], e = mas[3], n = mas[4]
-    while(n < masText.length) {
-        mas = EDKeys()
-        n = mas[4]
-    }
-    p = mas[0], q = mas[1], d = mas[2], e = mas[3]
-    let masNumbers = []
-    masNumbers = masText.map(elem => {
-        return ((Number(elem.charCodeAt(0)) ** e) % n)
+    let masNumbers = masText.map(elem => {
+        return Number((BigInt(elem.charCodeAt(0)) ** BigInt(e)) % BigInt(n))
     })
     masNumbers.forEach((elem, i) => {
         if (i === masNumbers.length - 1) textOutput += `${String.fromCharCode(elem)}`
-        else textOutput += `${String.fromCodePoint(elem)},`
+        else textOutput += `${String.fromCodePoint(elem)}`
     })
-    document.querySelector('#keys').innerHTML = `d = ${d} <br> e = ${e}`
+    document.querySelector('#keys').innerHTML = `p = ${p} <br> q = ${q} <br> d = ${d} <br> e = ${e}`
     document.querySelector('#parEncrypt').textContent = textOutput
 }
 
-
-
-function decrypt() {
+function decrypt(text, p, q, d) {
+    let masText = text.split(''), textOutput = ''
     
+    let masNumbers = masText.map(elem => {
+        return Number(BigInt(elem.charCodeAt(0) ** d) % BigInt(p * q))
+    })
+    masNumbers.forEach((elem) => {
+        textOutput += `${String.fromCharCode(elem)}`
+    })
+    document.querySelector('.parDecrypt').innerHTML = textOutput
 }
-
 inputText.addEventListener('keypress', event => {
     
 })
@@ -106,7 +110,12 @@ btnEnc.addEventListener('click', (event) => {
 })
 
 btnDec.addEventListener('click', (event) => {
-    
+    event.preventDefault()
+    let text = inputDec.value
+    let p = Number(document.querySelector('#keyP').value)
+    let q = Number(document.querySelector('#keyQ').value)
+    let d = Number(document.querySelector('#keyD').value)
+    decrypt(text,p, q, d)
 })
 
 inputDec.addEventListener('keypress', event => {
