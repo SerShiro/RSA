@@ -3,11 +3,9 @@ const inputDec = document.querySelector('#inputDec')
 const btnEnc = document.querySelector('#btnEnc')
 const btnDec = document.querySelector('#btnDec')
 
-const alphabet = ['а', 'б', 'в', 'г', 'д', 'е', 'ё', 'ж', 'з', 'и', 'й', 'к', 'л', 'м', 'н', 'о', 'п', 'р', 'с', 'т', 'у', 'ф', 'х', 'ц', 'ч', 'ш', 'щ', 'ъ', 'ы', 'ь', 'э', 'ю', 'я']
-
 const PQKeys = () => {
     let = simpleNumbers = []
-    for (let i = 0; i < 29; i++) {
+    for (let i = 0; i < 20; i++) {
         simpleNumbers[i] = i + 2;
     }
     for (let i = 0; i < simpleNumbers.length - 1; i++) {
@@ -48,7 +46,7 @@ const getNod = (num1, num2) => {
 
 
 const EDKeys = () => {
-    const mas = PQKeys()
+    let mas = PQKeys()
     const p = mas[0], q = mas[1]
     const n = p * q
     let d = 0
@@ -66,14 +64,32 @@ const EDKeys = () => {
         e = i
         if (((e * d) % ((p - 1) * (q - 1))) === 1) break
     }
-    console.log(p, q, d, e)
+    mas = [p, q, d, e, n]
+    return mas
 }
 
-EDKeys()
-
-function encrypt() {
-    
+function encrypt(text) {
+    let masText = text.split(''), textOutput = ''  
+    let mas = EDKeys()
+    let p = mas[0], q = mas[1], d = mas[2], e = mas[3], n = mas[4]
+    while(n < masText.length) {
+        mas = EDKeys()
+        n = mas[4]
+    }
+    p = mas[0], q = mas[1], d = mas[2], e = mas[3]
+    let masNumbers = []
+    masNumbers = masText.map(elem => {
+        return ((Number(elem.charCodeAt(0)) ** e) % n)
+    })
+    masNumbers.forEach((elem, i) => {
+        if (i === masNumbers.length - 1) textOutput += `${String.fromCharCode(elem)}`
+        else textOutput += `${String.fromCodePoint(elem)},`
+    })
+    document.querySelector('#keys').innerHTML = `d = ${d} <br> e = ${e}`
+    document.querySelector('#parEncrypt').textContent = textOutput
 }
+
+
 
 function decrypt() {
     
@@ -84,7 +100,9 @@ inputText.addEventListener('keypress', event => {
 })
 
 btnEnc.addEventListener('click', (event) => {
-    
+    event.preventDefault()
+    let text = inputText.value
+    encrypt(text)
 })
 
 btnDec.addEventListener('click', (event) => {
