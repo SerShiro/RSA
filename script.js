@@ -6,7 +6,7 @@ const btnDec = document.querySelector('#btnDec')
 
 const PQKeys = () => {
     let = simpleNumbers = []
-    for (let i = 0; i < 20; i++) {
+    for (let i = 0; i < 250; i++) {
         simpleNumbers[i] = i + 2;
     }
     for (let i = 0; i < simpleNumbers.length - 1; i++) {
@@ -76,9 +76,15 @@ const EDKeys = () => {
 function encrypt(text) {
     let masText = text.split(''), textOutput = ''  
     let mas = EDKeys()
-    let p = mas[0], q = mas[1], d = mas[2], e = mas[3], n = mas[4]
+    let p = mas[0], q = mas[1], d = mas[2], e = mas[3], n = mas[4], result = 1, ost
     let masNumbers = masText.map(elem => {
-        return Number((BigInt(elem.charCodeAt(0)) ** BigInt(e)) % BigInt(n))
+        // return Number((BigInt(elem.charCodeAt(0)) ** BigInt(e)) % BigInt(n))
+        ost = 1
+        for (let i = 0; i < e; i++) {
+            result = ost * elem.charCodeAt(0)
+            ost = result % n
+        }
+        return ost
     })
     masNumbers.forEach((elem, i) => {
         if (i === masNumbers.length - 1) textOutput += `${String.fromCharCode(elem)}`
@@ -90,9 +96,15 @@ function encrypt(text) {
 
 function decrypt(text, p, q, d) {
     let masText = text.split(''), textOutput = ''
-    
+    let result = 1, ost
     let masNumbers = masText.map(elem => {
-        return Number(BigInt(elem.charCodeAt(0) ** d) % BigInt(p * q))
+        // return Number(BigInt(elem.charCodeAt(0) ** d) % BigInt(p * q))
+        ost = 1
+        for (let i = 0; i < d; i++) {
+            result = ost * elem.charCodeAt(0)
+            ost = result % (p * q)
+        }
+        return ost
     })
     masNumbers.forEach((elem) => {
         textOutput += `${String.fromCharCode(elem)}`
