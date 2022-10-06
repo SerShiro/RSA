@@ -111,15 +111,14 @@ function decrypt(text, p, q, d) {
     })
     document.querySelector('.parDecrypt').innerHTML = textOutput
 }
-inputText.addEventListener('keypress', event => {
-    
-})
+
 
 btnEnc.addEventListener('click', (event) => {
     event.preventDefault()
     let text = inputText.value
     encrypt(text)
 })
+
 
 btnDec.addEventListener('click', (event) => {
     event.preventDefault()
@@ -130,7 +129,3 @@ btnDec.addEventListener('click', (event) => {
     decrypt(text,p, q, d)
 })
 
-inputDec.addEventListener('keypress', event => {
-    
-    
-})
