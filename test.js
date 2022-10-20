@@ -9,4 +9,4 @@ const power = (base, ex) => {
     }
     return d
 }
-console.log(power(20, 55))
+console.log(power(20, 65))
