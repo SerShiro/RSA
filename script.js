@@ -4,9 +4,24 @@ const btnEnc = document.querySelector('#btnEnc')
 const btnDec = document.querySelector('#btnDec')
 
 
+const powerMod = (base, ex, mod) => {
+    let d = 1
+    while (ex > 0) {
+        if (ex % 2 == 1) {
+            d *= base
+            d %= mod
+        }
+        base *= base
+        base %= mod
+        ex >>= 1
+    }
+    return d
+}
+
+
 const PQKeys = () => {
     let = simpleNumbers = []
-    for (let i = 0; i < 250; i++) {
+    for (let i = 0; i < 20000; i++) {
         simpleNumbers[i] = i + 2;
     }
     for (let i = 0; i < simpleNumbers.length - 1; i++) {
@@ -78,36 +93,31 @@ function encrypt(text) {
     let mas = EDKeys()
     let p = mas[0], q = mas[1], d = mas[2], e = mas[3], n = mas[4], result = 1, ost
     let masNumbers = masText.map(elem => {
-        // return Number((BigInt(elem.charCodeAt(0)) ** BigInt(e)) % BigInt(n))
-        ost = 1
-        for (let i = 0; i < e; i++) {
-            result = ost * elem.charCodeAt(0)
-            ost = result % n
-        }
-        return ost
+        return powerMod(elem.charCodeAt(0), e, n)
     })
-    masNumbers.forEach((elem, i) => {
-        if (i === masNumbers.length - 1) textOutput += `${String.fromCharCode(elem)}`
-        else textOutput += `${String.fromCodePoint(elem)}`
+    masNumbers =  masNumbers.map(elem => {
+        elem = elem.toString(36)
+        elem = elem.split('')
+        while (elem.length < 6) elem.unshift('0')
+        return elem.join('')
+    })
+    masNumbers.forEach(elem => {
+        textOutput += elem
     })
     document.querySelector('#keys').innerHTML = `p = ${p} <br> q = ${q} <br> d = ${d} <br> e = ${e}`
     document.querySelector('#parEncrypt').textContent = textOutput
 }
 
 function decrypt(text, p, q, d) {
-    let masText = text.split(''), textOutput = ''
-    let result = 1, ost
-    let masNumbers = masText.map(elem => {
-        // return Number(BigInt(elem.charCodeAt(0) ** d) % BigInt(p * q))
-        ost = 1
-        for (let i = 0; i < d; i++) {
-            result = ost * elem.charCodeAt(0)
-            ost = result % (p * q)
-        }
-        return ost
-    })
+    let masText = [], textOutput = ''
+    while(text.length >= 6) {
+        masText.push(text.substring(0, 6))
+        text = text.substring(6)
+    }
+    console.log(parseInt(masText[0], 36))
+    let masNumbers = masText.map(elem => powerMod((parseInt(elem, 36)), d, p * q))
     masNumbers.forEach((elem) => {
-        textOutput += `${String.fromCharCode(elem)}`
+        textOutput += String.fromCharCode(elem)
     })
     document.querySelector('.parDecrypt').innerHTML = textOutput
 }

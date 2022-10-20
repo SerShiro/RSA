@@ -10,21 +10,21 @@
 <body>
     <p class="heading">Encrypt</p>
     <form>
-        <input  id="input" type="text" placeholder="Enter text...">
+        <textarea  id="input" type="text" placeholder="Enter text..."></textarea>
         <button id="btnEnc">Encrypt!</button>
     </form>
     <p id="keys"></p>
-    <p id="parEncrypt"></p>
+    <textarea id="parEncrypt" cols="5" rows="5"></textarea>
     <p class="heading">Decrypt</p>
     <form>
-        <input  id="inputDec" type="text" placeholder="Enter the code with commas between the letters...">
+        <textarea  id="inputDec" type="text" placeholder="Enter the code with commas between the letters..."></textarea>
         <input  id="keyP" type="text" placeholder="Enter p key...">
         <input  id="keyQ" type="text" placeholder="Enter q key...">
         <input  id="keyD" type="text" placeholder="Enter d key...">
         <button id="btnDec">Decrypt!</button>
     </form>
     <div class="container">
-        <p class="parDecrypt"></p>
+        <textarea class="parDecrypt" cols="5" rows="5"></textarea>
     </div>
     <script src="script.js"></script>
 </body>

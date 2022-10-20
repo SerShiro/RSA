@@ -1,0 +1,19 @@
+{
+  "name": "rsa",
+  "version": "1.0.0",
+  "description": "*Encrypt and Decrypt RSA cipher*",
+  "main": "script.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SerShiro/RSA.git"
+  },
+  "author": "SerShiro <seregapolpro@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SerShiro/RSA/issues"
+  },
+  "homepage": "https://github.com/SerShiro/RSA#readme"
+}

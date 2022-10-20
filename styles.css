@@ -18,7 +18,7 @@ form {
     width: 8%;
 }
 
-button, p {
+button, p, #parEncrypt, .parDecrypt {
     margin: 10px;
     padding: 10px;
     font-size: 25px;
@@ -26,7 +26,7 @@ button, p {
     border: 2px solid black;
 }
 
-p {
+p, #parEncrypt, .parDecrypt {
     width: 60%;
     display: block;
     margin-right: auto;
@@ -42,21 +42,7 @@ p {
     text-align: center;
 }
 
-.parDecrypt {
-    border: none;
-    text-align: center;
-    margin: auto;
-    padding: 10px;
-}
 
-.container {
-    border: 2px solid black;
-    border-radius: 15px;
-    width: 60%;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-}
 
 
 
